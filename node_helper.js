@@ -42,9 +42,9 @@ module.exports = NodeHelper.create({
     this.expressApp.use(bodyParser.json());
     this.expressApp.use(bodyParser.urlencoded({extended: true}));
 
-    this.expressApp.post(`/${this.name}/timer`, this.post);
-    this.expressApp.put(`/${this.name}/timer`, this.put);
-    this.expressApp.delete(`/${this.name}/timer`, this.delete);
+    this.expressApp.post(`/${this.name}/timer`, this.post.bind(this));
+    this.expressApp.put(`/${this.name}/timer`, this.put.bind(this));
+    this.expressApp.delete(`/${this.name}/timer`, this.delete.bind(this));
   },
 
   post: function(req, res) {
