@@ -48,37 +48,37 @@ module.exports = NodeHelper.create({
   },
 
   post: function(req, res) {
-      if (!req.body.timeLimitMs) {
-        res.status(400).send('timeLimitMs is undefined');
-        return;
-      }
-      if (!this.timer.finished()) {
-        res.status(200).send('A timer is already running');
-        return;
-      }
-      this.startTimer(req.body.timeLimitMs);
-      res.status(200).send('Request accepted');
+    if (!req.body.timeLimitMs) {
+      res.status(400).send('timeLimitMs is undefined');
+      return;
+    }
+    if (!this.timer.finished()) {
+      res.status(200).send('A timer is already running');
+      return;
+    }
+    this.startTimer(req.body.timeLimitMs);
+    res.status(200).send('Request accepted');
   },
 
   put: function(req, res) {
-        if (!req.body.timeLimitMs) {
-          res.status(400).send('timeLimitMs is undefined');
-          return;
-        }
-        if (this.timer.finished()) {
-          res.status(200).send('A timer is not running');
-          return;
-        }
-        this.timer.timeLimitMs = req.body.timeLimitMs;
-        res.status(200).send('Request accepted');
+    if (!req.body.timeLimitMs) {
+      res.status(400).send('timeLimitMs is undefined');
+      return;
+    }
+    if (this.timer.finished()) {
+      res.status(200).send('A timer is not running');
+      return;
+    }
+    this.timer.timeLimitMs = req.body.timeLimitMs;
+    res.status(200).send('Request accepted');
   },
 
   delete: function(req, res) {
-        if (this.timer.finished()) {
-          res.status(200).send('A timer is not running');
-          return;
-        }
-        this.stopTimer();
-        res.status(200).send('Request accepted');
+    if (this.timer.finished()) {
+      res.status(200).send('A timer is not running');
+      return;
+    }
+    this.stopTimer();
+    res.status(200).send('Request accepted');
   },
 });
