@@ -1,0 +1,70 @@
+/* Based on: https://css-tricks.com/how-to-create-an-animated-countdown-timer-with-html-css-and-javascript/ */
+
+.timer {
+  font-family: sans-serif;
+  display: grid;
+  overflow: hidden;
+  place-items: center;
+}
+
+.timer-div {
+  position: relative;
+  width: 500px;
+  height: 500px;
+}
+
+.timer-svg {
+  transform: scaleX(+1);
+}
+
+.timer-circle {
+  fill: none;
+  stroke: none;
+}
+
+.timer-path-elapsed {
+  stroke-width: 7px;
+  transition: 500ms linear all;
+  stroke-opacity: .3;
+}
+
+.timer-path-elapsed.green {
+  stroke: rgb(65, 184, 131);
+}
+
+.timer-path-elapsed.orange {
+  stroke: orange;
+}
+
+.timer-path-elapsed.red {
+  stroke: red;
+}
+
+.timer-path-remaining {
+  stroke-width: 7px;
+  stroke-linecap: round;
+  transform: rotate(90deg);
+  transform-origin: center;
+  transition: 500ms linear all;
+  fill-rule: nonzero;
+  stroke: currentColor;
+}
+
+.timer-path-remaining.green {
+  color: rgb(65, 184, 131);
+}
+
+.timer-path-remaining.orange {
+  color: orange;
+}
+
+.timer-path-remaining.red {
+  color: red;
+}
+
+.timer-text {
+  fill: white;
+  dominant-baseline: middle;
+  text-anchor: middle;
+  font-family: sans-serif;
+}

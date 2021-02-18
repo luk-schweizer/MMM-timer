@@ -1,0 +1,26 @@
+{
+  "name": "mmm-timer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "MMM-timer.js",
+  "scripts": {
+    "test": "jest",
+    "postinstall": "npx eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luk-schweizer/MMM-timer.git"
+  },
+  "author": "Lucas Schweizer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luk-schweizer/MMM-timer/issues"
+  },
+  "homepage": "https://github.com/luk-schweizer/MMM-timer#readme",
+  "devDependencies": {
+    "body-parser": "^1.19.0",
+    "eslint": "^7.19.0",
+    "eslint-config-google": "^0.14.0",
+    "jest": "^26.6.3"
+  }
+}
