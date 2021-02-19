@@ -63,7 +63,7 @@ The following list contains the different HTTP methods that can be used with the
 			<th>HTTP Method</th>
 			<th>Body</th>
 			<th>Response</th>
-			<th width="100%">Description</th>
+			<th>Description</th>
 		</tr>
 	<thead>
 	<tbody>
