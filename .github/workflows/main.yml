@@ -12,7 +12,7 @@ jobs:
     steps:
     - name: Hello world action step
       id: hello
-      uses: luk-schweizer/code-coverage-jest-action@v0.2
+      uses: luk-schweizer/code-coverage-jest-action@Draft
       with:
         who-to-greet: 'Mona the Octocat'
         repo-token: ${{ secrets.GITHUB_TOKEN }}
