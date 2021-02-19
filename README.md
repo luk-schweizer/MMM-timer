@@ -30,7 +30,6 @@ modules: [
 The following properties can be configured:
 
 <table width="100%">
-	<!-- why, markdown... -->
 	<thead>
 		<tr>
 			<th>Option</th>
@@ -50,12 +49,17 @@ The following properties can be configured:
 
 ## API
 
-The following is the list of endpoints that the module will expose:
+The API exposed by the module is: 
+```bash
+http://{MagicMirrorServerHost}/MMM-timer/timer
+```
+Where `MagicMirrorServerHost` is the host of the Magic Mirror server or `localhost` if hitting locally.
+
+The following list contains the different HTTP methods that can be used with the API above:
+
 <table width="100%">
 	<thead>
 		<tr>
-			<th>Action</th>
-			<th>Endpoint</th>
 			<th>HTTP Method</th>
 			<th>Body</th>
 			<th>Response</th>
@@ -64,10 +68,6 @@ The following is the list of endpoints that the module will expose:
 	<thead>
 	<tbody>
 		<tr>
-			<td>Create a timer</td>
-			<td>
-				<code>http://{MagicMirrorServerHost}/MMM-timer/timer</code>
-			</td>
 			<td>
                 <code><b>POST</b></code>
             </td>
@@ -76,20 +76,16 @@ The following is the list of endpoints that the module will expose:
             </td>
             <td>
                 <ul>
-                    <li>200 (Request processed): Create successfully </li>
-                    <li>400 (timeLimitMs is undefined): timeLimitMs is not present in the body, request is discarded </li>
-                    <li>409 (A timer is already running): A timer is running, request is discarded </li>
+                    <li><b>200</b> (Request processed): Create successfully </li>
+                    <li><b>400</b> (timeLimitMs is undefined): timeLimitMs is not present in the body, request is discarded </li>
+                    <li><b>409</b> (A timer is already running): A timer is running, request is discarded </li>
                 </ul>
             </td>            
 			<td>
-                Starts and shows the timer with the specific time limit. No action if a timer is already running.
+                <b>Starts</b> and shows the timer with the specific time limit. No action if a timer is already running.
             </td>
 		</tr>
 		<tr>
-			<td>Update the timer</td>
-			<td>
-				<code>http://{MagicMirrorServerHost}/MMM-timer/timer</code>
-			</td>
 			<td>
                 <code><b>PUT</b></code>
             </td>
@@ -98,20 +94,16 @@ The following is the list of endpoints that the module will expose:
             </td>
             <td>
                 <ul>
-                    <li>200 (Request processed): Update successfully </li>
-                    <li>400 (timeLimitMs is undefined): timeLimitMs is not present in the body, request is discarded </li>
-                    <li>409 (A timer is not running): A timer is not running, request is discarded </li>
+                    <li><b>200</b> (Request processed): Update successfully </li>
+                    <li><b>400</b> (timeLimitMs is undefined): timeLimitMs is not present in the body, request is discarded </li>
+                    <li><b>409</b> (A timer is not running): A timer is not running, request is discarded </li>
                 </ul>
             </td>            
 			<td>
-                Updates the running timer with the specific time limit. No action is made if no timer is running.
+                <b>Updates</b> the running timer with the specific time limit. No action is made if no timer is running.
             </td>
 		</tr>
 		<tr>
-			<td>Delete the timer</td>
-			<td>
-				<code>http://{MagicMirrorServerHost}/MMM-timer/timer</code>
-			</td>
 			<td>
                 <code><b>DELETE</b></code>
             </td>
@@ -120,19 +112,19 @@ The following is the list of endpoints that the module will expose:
             </td>
             <td>
                 <ul>
-                    <li>200 (Request processed): Delete successfully </li>
-                    <li>409 (A timer is not running): A timer is not running, request is discarded </li>
+                    <li><b>200</b> (Request processed): Delete successfully </li>
+                    <li><b>409</b> (A timer is not running): A timer is not running, request is discarded </li>
                 </ul>
             </td>            
 			<td>
-                Stops and hide the running timer with the specific time limit. No action is made if no timer is running.
+                <b>Stops</b> and hide the running timer with the specific time limit. No action is made if no timer is running.
             </td>
 		</tr>				
 	</tbody>
 </table>
 
 ## Notifications
-The following is the list of notifications that the module will handle:
+List of notifications that the module can handle:
 <table width="100%">
 	<thead>
 		<tr>
