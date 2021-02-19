@@ -1,5 +1,5 @@
 on: [push]
-
+name: Coverage
 jobs:
   hello_world_job:
     runs-on: ubuntu-latest
@@ -7,7 +7,7 @@ jobs:
     steps:
     - name: Hello world action step
       id: hello
-      uses: action/code-coverage-jest-action@v0.1
+      uses: luk-schweizer/code-coverage-jest-action@v0.1
       with:
         who-to-greet: 'Mona the Octocat'
     # Use the output from the `hello` step
