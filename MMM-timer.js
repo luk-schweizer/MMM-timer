@@ -41,27 +41,38 @@ Module.register('MMM-timer', {
   },
 
   notificationReceived: function(notification, payload, sender) {
-    if (notification === 'MODULE_DOM_CREATED') {
-      this.hide();
+    switch (notification) {
+      case 'START_TIMER':
+        this.sendSocketNotification('START_TIMER', payload);
+        break;
+      case 'UPDATE_TIMER':
+        this.sendSocketNotification('UPDATE_TIMER', payload);
+        break;
+      case 'STOP_TIMER':
+        this.sendSocketNotification('STOP_TIMER', {});
+        break;
+      case 'MODULE_DOM_CREATED':
+        this.hide();
+        break;
     }
   },
 
   socketNotificationReceived: function(notification, payload) {
-    if (notification === 'TIMER_RUNNING') {
-      if (this.hideTimeout) clearTimeout(this.hideTimeout);
-      if (this.hidden) this.show();
-      this.updateView(payload);
-      return;
-    }
-    if (notification === 'TIMER_FINISHED') {
-      this.updateView(payload);
-      document.getElementById('timer-path-remaining')
-          .setAttribute('stroke-dasharray', `${this.PATH_LENGTH} ${this.PATH_LENGTH}`);
-      const self = this;
-      this.hideTimeout = setTimeout(function() {
-        self.hide();
-      }, this.config.timeToHideTimerWhenCompleteMs);
-      return;
+    switch (notification) {
+      case 'TIMER_RUNNING':
+        if (this.hideTimeout) clearTimeout(this.hideTimeout);
+        if (this.hidden) this.show();
+        this.updateView(payload);
+        break;
+      case 'TIMER_FINISHED':
+        this.updateView(payload);
+        document.getElementById('timer-path-remaining')
+            .setAttribute('stroke-dasharray', `${this.PATH_LENGTH} ${this.PATH_LENGTH}`);
+        const self = this;
+        this.hideTimeout = setTimeout(function() {
+          self.hide();
+        }, this.config.timeToHideTimerWhenCompleteMs);
+        break;
     }
   },
 

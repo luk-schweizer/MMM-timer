@@ -1,1 +1,173 @@
 # MMM-timer
+[![GitHub build](https://github.com/luk-schweizer/MMM-timer/actions/workflows/node.js.yml/badge.svg)](https://github.com/luk-schweizer/MMM-timer/actions/workflows/node.js.yml)
+[![GitHub release](https://img.shields.io/badge/release-v1.0.0-blue)](https://github.com/luk-schweizer/MMM-timer/releases/)
+[![GitHub license](https://img.shields.io/badge/license-ISC-green)](https://github.com/luk-schweizer/MMM-timer/blob/master/LICENSE)
+<br/><br/>This is a module for the [MagicMirror](https://github.com/MichMich/MagicMirror). It adds a Timer that can be controlled by API or Notifications.
+The Timer will only be shown while is running. Only one timer can run at a time. Possible actions are start a timer, update and stop a running timer.
+
+![](timer.gif)
+   
+## Installation
+1. Go to your MagicMirror's `modules` folder.
+2. Run `git clone https://github.com/luk-schweizer/MMM-timer.git`.
+3. Go to MMM-timer folder created in point 2. 
+4. Run `npm install` to install node dependencies.
+
+## Using the module
+Add the module to the configuration file `config/config.js`:
+````javascript
+modules: [
+	{
+		module: 'MMM-timer',
+		config: {
+			timeToHideTimerWhenCompleteMs: 10000
+		}
+	}
+]
+````
+## Configuration options
+
+The following properties can be configured:
+
+<table width="100%">
+	<!-- why, markdown... -->
+	<thead>
+		<tr>
+			<th>Option</th>
+			<th width="100%">Description</th>
+		</tr>
+	<thead>
+	<tbody>
+		<tr>
+			<td><code>timeToHideTimerWhenCompleteMs</code></td>
+			<td>Time in miliseconds that the Timer will remain on screen before being hidden once the Timer finished.<br>
+				<br><b>Possible values:</b> <code>int</code>
+				<br><b>Default value:</b> <code>10000</code>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+## API
+
+The following is the list of endpoints that the module will expose:
+<table width="100%">
+	<thead>
+		<tr>
+			<th>Action</th>
+			<th>Endpoint</th>
+			<th>HTTP Method</th>
+			<th>Body</th>
+			<th>Response</th>
+			<th width="100%">Description</th>
+		</tr>
+	<thead>
+	<tbody>
+		<tr>
+			<td>Create a timer</td>
+			<td>
+				<code>http://{MagicMirrorServerHost}/MMM-timer/timer</code>
+			</td>
+			<td>
+                <code><b>POST</b></code>
+            </td>
+			<td>
+                <code>{timeLimitMs: 1000}</code>
+            </td>
+            <td>
+                <ul>
+                    <li>200 (Request processed): Create successfully </li>
+                    <li>400 (timeLimitMs is undefined): timeLimitMs is not present in the body, request is discarded </li>
+                    <li>409 (A timer is already running): A timer is running, request is discarded </li>
+                </ul>
+            </td>            
+			<td>
+                Starts and shows the timer with the specific time limit. No action if a timer is already running.
+            </td>
+		</tr>
+		<tr>
+			<td>Update the timer</td>
+			<td>
+				<code>http://{MagicMirrorServerHost}/MMM-timer/timer</code>
+			</td>
+			<td>
+                <code><b>PUT</b></code>
+            </td>
+			<td>
+                <code>{timeLimitMs: 2000}</code>
+            </td>
+            <td>
+                <ul>
+                    <li>200 (Request processed): Update successfully </li>
+                    <li>400 (timeLimitMs is undefined): timeLimitMs is not present in the body, request is discarded </li>
+                    <li>409 (A timer is not running): A timer is not running, request is discarded </li>
+                </ul>
+            </td>            
+			<td>
+                Updates the running timer with the specific time limit. No action is made if no timer is running.
+            </td>
+		</tr>
+		<tr>
+			<td>Delete the timer</td>
+			<td>
+				<code>http://{MagicMirrorServerHost}/MMM-timer/timer</code>
+			</td>
+			<td>
+                <code><b>DELETE</b></code>
+            </td>
+			<td>
+                <code>none</code>
+            </td>
+            <td>
+                <ul>
+                    <li>200 (Request processed): Delete successfully </li>
+                    <li>409 (A timer is not running): A timer is not running, request is discarded </li>
+                </ul>
+            </td>            
+			<td>
+                Stops and hide the running timer with the specific time limit. No action is made if no timer is running.
+            </td>
+		</tr>				
+	</tbody>
+</table>
+
+## Notifications
+The following is the list of notifications that the module will handle:
+<table width="100%">
+	<thead>
+		<tr>
+			<th>Notification</th>
+			<th>Payload</th>
+			<th width="100%">Description</th>
+		</tr>
+	<thead>
+	<tbody>
+		<tr>
+			<td>START_TIMER</td>
+			<td>
+				<code>{timeLimitMs: 1000}</code>
+			</td>
+			<td>
+                Starts and shows the timer with the specific time limit. No action if a timer is already running.
+            </td>
+		</tr>
+		<tr>
+			<td>UPDATE_TIMER</td>
+			<td>
+				<code>{timeLimitMs: 2000}</code>
+			</td>
+			<td>
+                Updates the running timer with the specific time limit. No action is made if no timer is running.
+            </td>
+		</tr>
+		<tr>
+			<td>STOP_TIMER</td>
+			<td>
+				<code>none</code>
+			</td>
+			<td>
+                Stops and hide the running timer with the specific time limit. No action is made if no timer is running.
+            </td>
+		</tr>				
+	</tbody>
+</table>

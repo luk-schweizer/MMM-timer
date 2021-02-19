@@ -10,6 +10,20 @@ module.exports = NodeHelper.create({
   timer: new Timer(),
   updateInterval: null,
 
+  socketNotificationReceived: function(notification, payload) {
+    switch (notification) {
+      case 'START_TIMER':
+        this.startTimer(payload.timeLimitMs);
+        break;
+      case 'UPDATE_TIMER':
+        this.timer.timeLimitMs = payload.timeLimitMs;
+        break;
+      case 'STOP_TIMER':
+        this.stopTimer();
+        break;
+    }
+  },
+
   payload: function() {
     return {
       timeLeftMs: this.timer.timeLeftMs(),
@@ -53,11 +67,11 @@ module.exports = NodeHelper.create({
       return;
     }
     if (!this.timer.finished()) {
-      res.status(200).send('A timer is already running');
+      res.status(409).send('A timer is already running');
       return;
     }
     this.startTimer(req.body.timeLimitMs);
-    res.status(200).send('Request accepted');
+    res.status(200).send('Request processed');
   },
 
   put: function(req, res) {
@@ -66,19 +80,19 @@ module.exports = NodeHelper.create({
       return;
     }
     if (this.timer.finished()) {
-      res.status(200).send('A timer is not running');
+      res.status(409).send('A timer is not running');
       return;
     }
     this.timer.timeLimitMs = req.body.timeLimitMs;
-    res.status(200).send('Request accepted');
+    res.status(200).send('Request processed');
   },
 
   delete: function(req, res) {
     if (this.timer.finished()) {
-      res.status(200).send('A timer is not running');
+      res.status(409).send('A timer is not running');
       return;
     }
     this.stopTimer();
-    res.status(200).send('Request accepted');
+    res.status(200).send('Request processed');
   },
 });

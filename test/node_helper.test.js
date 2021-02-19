@@ -43,7 +43,7 @@ test('nodeHelperModule post should not start the timer when a timer is already r
   NodeHelperModule.post(req, resMock);
 
   expect(NodeHelperModule.timer.start).toHaveBeenCalledTimes(0);
-  expect(resMock.status).toHaveBeenCalledWith(200);
+  expect(resMock.status).toHaveBeenCalledWith(409);
   expect(resMock.send).toHaveBeenCalledWith('A timer is already running');
 });
 
@@ -56,7 +56,7 @@ test('nodeHelperModule post should start the timer when timeLimitMs is defined i
 
   expect(NodeHelperModule.timer.start).toHaveBeenCalledWith(2000);
   expect(resMock.status).toHaveBeenCalledWith(200);
-  expect(resMock.send).toHaveBeenCalledWith('Request accepted');
+  expect(resMock.send).toHaveBeenCalledWith('Request processed');
 });
 
 test('nodeHelperModule post should send TIMER_RUNNING event in intervals of 500ms when timer start', () => {
@@ -93,7 +93,7 @@ test('nodeHelperModule post should send TIMER_RUNNING event in intervals of 500m
         'timeLimitMs': 2000,
       });
   expect(resMock.status).toHaveBeenCalledWith(200);
-  expect(resMock.send).toHaveBeenCalledWith('Request accepted');
+  expect(resMock.send).toHaveBeenCalledWith('Request processed');
 
   jest.advanceTimersByTime(500);
 
@@ -138,7 +138,7 @@ test('nodeHelperModule post should send TIMER_FINISHED event and clearInterval o
         'timeLimitMs': 2000,
       });
   expect(resMock.status).toHaveBeenCalledWith(200);
-  expect(resMock.send).toHaveBeenCalledWith('Request accepted');
+  expect(resMock.send).toHaveBeenCalledWith('Request processed');
 
   jest.advanceTimersByTime(500);
 
@@ -165,7 +165,7 @@ test('nodeHelperModule put should not update the timer when a timer is not runni
   NodeHelperModule.put(req, resMock);
 
   expect(NodeHelperModule.timer.timeLimitMs).toBe(2000);
-  expect(resMock.status).toHaveBeenCalledWith(200);
+  expect(resMock.status).toHaveBeenCalledWith(409);
   expect(resMock.send).toHaveBeenCalledWith('A timer is not running');
 });
 
@@ -176,7 +176,7 @@ test('nodeHelperModule delete should not stop the timer when a timer is not runn
   NodeHelperModule.delete({}, resMock);
 
   expect(NodeHelperModule.timer.reset).toHaveBeenCalledTimes(0);
-  expect(resMock.status).toHaveBeenCalledWith(200);
+  expect(resMock.status).toHaveBeenCalledWith(409);
   expect(resMock.send).toHaveBeenCalledWith('A timer is not running');
 });
 
@@ -205,7 +205,7 @@ test('nodeHelperModule delete should reset timer and send TIMER_FINISHED event a
         'timeLimitMs': 2000,
       });
   expect(resMock.status).toHaveBeenCalledWith(200);
-  expect(resMock.send).toHaveBeenCalledWith('Request accepted');
+  expect(resMock.send).toHaveBeenCalledWith('Request processed');
 });
 
 
@@ -221,5 +221,36 @@ test('nodeHelperModule put should update timeLimitMs when timer is running', () 
   // Then
   expect(NodeHelperModule.timer.timeLimitMs).toBe(4000);
   expect(resMock.status).toHaveBeenCalledWith(200);
-  expect(resMock.send).toHaveBeenCalledWith('Request accepted');
+  expect(resMock.send).toHaveBeenCalledWith('Request processed');
+});
+
+
+test('nodeHelperModule should update timeLimitMs when timer is running and UPDATE_TIMER notification is received', () => {
+  // When
+  NodeHelperModule.timer.finished = jest.fn(() => false);
+  NodeHelperModule.timer.timeLimitMs = 2000;
+  const payload = {timeLimitMs: 4000};
+
+  // That
+  NodeHelperModule.socketNotificationReceived('UPDATE_TIMER', payload);
+
+  // Then
+  expect(NodeHelperModule.timer.timeLimitMs).toBe(4000);
+});
+
+test('nodeHelperModule should reset timer when timer is running and STOP_TIMER notification is received', () => {
+  NodeHelperModule.timer.finished = jest.fn(() => false);
+
+  NodeHelperModule.socketNotificationReceived('STOP_TIMER', {});
+
+  expect(NodeHelperModule.timer.reset).toHaveBeenCalledTimes(1);
+});
+
+test('nodeHelperModule should start the timer when timeLimitMs is defined in the request and there is no timer running and START_TIMER notification is received', () => {
+  const payload = {timeLimitMs: 2000};
+  NodeHelperModule.timer.finished = jest.fn(() => true);
+
+  NodeHelperModule.socketNotificationReceived('START_TIMER', payload);
+
+  expect(NodeHelperModule.timer.start).toHaveBeenCalledWith(2000);
 });
