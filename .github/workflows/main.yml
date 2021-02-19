@@ -1,15 +1,18 @@
-on: [push]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
 name: Coverage
 jobs:
   hello_world_job:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: Coverage Report
     steps:
     - name: Hello world action step
       id: hello
       uses: luk-schweizer/code-coverage-jest-action@v0.1
       with:
         who-to-greet: 'Mona the Octocat'
-    # Use the output from the `hello` step
-    - name: Get the output time
-      run: echo "The time was ${{ steps.hello.outputs.time }}"
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
