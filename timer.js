@@ -62,12 +62,12 @@ class Timer {
   /**
       * Calculates the actual stage/phase of the timer.
       *
-      * @return {string} 'start'(more than 20s left), 'middle' (20s left), 'end'(10s left)
+      * @return {string} 'start'(more than 21s left), 'middle' (21s left), 'end'(11s left)
       */
   stage() {
     const timeLeft = this.timeLeftMs();
-    if (timeLeft > 10000 && timeLeft <= 20000) return 'middle';
-    if (timeLeft <= 10000) return 'end';
+    if (timeLeft >= 11000 && timeLeft < 21000) return 'middle';
+    if (timeLeft < 11000) return 'end';
     return 'start';
   }
 }
