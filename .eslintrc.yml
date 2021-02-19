@@ -12,5 +12,4 @@ rules: {
     "code": 120,
     "ignoreStrings": true
   } ]
-
 }
