@@ -10,8 +10,9 @@ The Timer will only be shown while is running. Only one timer can run at a time.
 ## Installation
 1. Go to your MagicMirror's `modules` folder.
 2. Run `git clone https://github.com/luk-schweizer/MMM-timer.git`.
-3. Go to MMM-timer folder created in point 2. 
-4. Run `npm install` to install node dependencies.
+
+<br/>
+<br/>
 
 ## Using the module
 Add the module to the configuration file `config/config.js`:
@@ -25,6 +26,9 @@ modules: [
 	}
 ]
 ````
+<br/>
+<br/>
+
 ## Configuration options
 
 The following properties can be configured:
@@ -47,8 +51,10 @@ The following properties can be configured:
 	</tbody>
 </table>
 
-## API
+<br/>
+<br/>
 
+## API
 The API exposed by the module is: 
 ```bash
 http://{MagicMirrorServerHost}/MMM-timer/timer
@@ -122,6 +128,9 @@ The following list contains the different HTTP methods that can be used with the
 		</tr>				
 	</tbody>
 </table>
+
+<br/>
+<br/>
 
 ## Notifications
 List of notifications that the module can handle:
