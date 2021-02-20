@@ -26,3 +26,7 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+    - name: Coverage
+      uses: luk-schweizer/code-coverage-jest-action@dev
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
