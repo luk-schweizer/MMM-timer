@@ -27,11 +27,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+    - uses: actions/checkout@v2
     - name: Coverage
       id: jest-coverage
       uses: luk-schweizer/code-coverage-jest-action@dev
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        create-file: './coverage/badge.svg'
+        create-file-path: './coverage/badge.svg'
     - name: Get badge url
       run: echo "Badge url ${{ steps.jest-coverage.outputs.BADGE_URL }}"
