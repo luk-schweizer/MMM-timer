@@ -1,11 +1,14 @@
 {
   "name": "mmm-timer",
   "version": "1.0.0",
-  "description": "",
+  "description": "Timer module for Magic Mirror",
   "main": "MMM-timer.js",
   "scripts": {
     "test": "jest",
-    "postinstall": "npx eslint ."
+    "coverage": "jest --collectCoverage",
+    "coverage2": "jest --coverage --rootDir .",
+    "postinstall": "npx eslint .",
+    "deploy": "cp -r node_modules /Users/lucas/Dev/MagicMirror/modules/MMM-timer && cp MMM-timer.js /Users/lucas/Dev/MagicMirror/modules/MMM-timer && cp node_helper.js /Users/lucas/Dev/MagicMirror/modules/MMM-timer && cp styles.css /Users/lucas/Dev/MagicMirror/modules/MMM-timer && cp timer.js /Users/lucas/Dev/MagicMirror/modules/MMM-timer"
   },
   "repository": {
     "type": "git",
