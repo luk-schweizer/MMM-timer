@@ -5,10 +5,8 @@
   "main": "MMM-timer.js",
   "scripts": {
     "test": "jest",
-    "coverage": "jest --collectCoverage",
-    "coverage2": "jest --coverage --rootDir .",
-    "postinstall": "npx eslint .",
-    "deploy": "cp -r node_modules /Users/lucas/Dev/MagicMirror/modules/MMM-timer && cp MMM-timer.js /Users/lucas/Dev/MagicMirror/modules/MMM-timer && cp node_helper.js /Users/lucas/Dev/MagicMirror/modules/MMM-timer && cp styles.css /Users/lucas/Dev/MagicMirror/modules/MMM-timer && cp timer.js /Users/lucas/Dev/MagicMirror/modules/MMM-timer"
+    "coverage": "jest --coverage --coverageThreshold='{\"global\":{\"statements\":60, \"branches\":60, \"functions\":60, \"lines\":60}}'",
+    "postinstall": "npx eslint ."
   },
   "repository": {
     "type": "git",
