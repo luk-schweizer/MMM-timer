@@ -25,7 +25,7 @@ jobs:
     - name: Badge Coverage
       id: jest-coverage
       uses: luk-schweizer/code-coverage-jest-action@dev
-      if: ${{ matrix.node-version ==  15.x}}
+      if: ${{ matrix.node-version == '15.x'}}
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         create-file-path: './coverage/badge.svg'
