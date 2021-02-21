@@ -28,4 +28,4 @@ jobs:
       if: ${{ matrix.node-version == '15.x'}}
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        create-file-path: './coverage/badge.svg'
+        create-file-path: 'coverage/badge.svg'
