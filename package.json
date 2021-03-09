@@ -5,7 +5,7 @@
   "main": "MMM-timer.js",
   "scripts": {
     "test": "jest",
-    "coverage": "jest --coverage --coverageThreshold='{\"global\":{\"statements\":70, \"branches\":70, \"functions\":70, \"lines\":70}}'",
+    "coverage": "jest --coverage --collectCoverageFrom='**/*.js' --coverageThreshold='{\"global\":{\"statements\":70, \"branches\":70, \"functions\":70, \"lines\":70}}'",
     "postinstall": "npx eslint ."
   },
   "repository": {

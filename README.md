@@ -1,8 +1,8 @@
 # MMM-timer
-[![GitHub build](https://github.com/luk-schweizer/MMM-timer/actions/workflows/node.js.yml/badge.svg)](https://github.com/luk-schweizer/MMM-timer/actions/workflows/node.js.yml)
-[![GitHub coverage](coverage/badge.svg)](https://github.com/luk-schweizer/MMM-timer/actions/workflows/node.js.yml)
-[![GitHub release](https://img.shields.io/badge/release-v1.0.0-blue)](https://github.com/luk-schweizer/MMM-timer/releases/)
-[![GitHub license](https://img.shields.io/badge/license-ISC-green)](https://github.com/luk-schweizer/MMM-timer/blob/master/LICENSE)
+[![](https://github.com/luk-schweizer/MMM-timer/actions/workflows/node.js.yml/badge.svg)](https://github.com/luk-schweizer/MMM-timer/actions/workflows/node.js.yml)
+[![](coverage/badge.svg)](https://github.com/luk-schweizer/MMM-timer/actions/workflows/node.js.yml)
+![[GitHub release (latest by date)](https://img.shields.io/github/v/release/luk-schweizer/MMM-timer)](https://github.com/luk-schweizer/MMM-timer/releases/)
+![[GitHub](https://img.shields.io/github/license/luk-schweizer/MMM-timer)](https://github.com/luk-schweizer/MMM-timer/blob/master/LICENSE)
 <br/><br/>This is a module for the [MagicMirror](https://github.com/MichMich/MagicMirror). It adds a Timer that can be controlled by API or Notifications.
 The Timer will only be shown while is running. Only one timer can run at a time. Possible actions are start a timer, update and stop a running timer.
 
