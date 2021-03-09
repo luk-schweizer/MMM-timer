@@ -1,5 +1,6 @@
 # MMM-timer
 [![](https://github.com/luk-schweizer/MMM-timer/actions/workflows/node.js.yml/badge.svg)](https://github.com/luk-schweizer/MMM-timer/actions/workflows/node.js.yml)
+[![coverage](https://img.shields.io/endpoint?url=https://api.keyvalue.xyz/f447ef15/coverage)](https://github.com/luk-schweizer/MMM-timer/actions/workflows/node.js.yml)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/luk-schweizer/MMM-timer)](https://github.com/luk-schweizer/MMM-timer/releases/)
 [![GitHub](https://img.shields.io/github/license/luk-schweizer/MMM-timer)](https://github.com/luk-schweizer/MMM-timer/blob/master/LICENSE)
 <br/><br/>This is a module for the [MagicMirror](https://github.com/MichMich/MagicMirror). It adds a Timer that can be controlled by API or Notifications.
