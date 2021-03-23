@@ -5,7 +5,7 @@
 <br/><br/>This is a module for the [MagicMirror](https://github.com/MichMich/MagicMirror). It adds a Timer that can be controlled by API or Notifications.
 The Timer will only be shown while is running. Only one timer can run at a time. Possible actions are start a timer, update and stop a running timer.
 
-![](https://i.imgur.com/ufbNlyS.gif)
+![](https://i.imgur.com/qsbk57b.gif)
    
 ## Installation
 1. Go to your MagicMirror's `modules` folder.
