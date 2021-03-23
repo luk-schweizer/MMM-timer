@@ -21,7 +21,7 @@ jobs:
       if: ${{ matrix.node-version != '15.x'}}
     - name: Badge Coverage
       id: jest-coverage
-      uses: luk-schweizer/jest-code-coverage-badge-action@v1.0.0
+      uses: luk-schweizer/jest-code-coverage-badge-action@v1.0.1
       if: ${{ matrix.node-version == '15.x'}}
       with:
         kvaas-key-url: 'https://api.keyvalue.xyz/f447ef15/coverage'
