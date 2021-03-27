@@ -16,7 +16,10 @@ module.exports = NodeHelper.create({
         this.startTimer(payload.timeLimitMs);
         break;
       case 'UPDATE_TIMER':
-        this.timer.timeLimitMs = payload.timeLimitMs;
+        this.timer.update(payload.timeLimitMs);
+        break;
+      case 'ADD_TIMER':
+        this.timer.add(payload.timeMs);
         break;
       case 'STOP_TIMER':
         this.stopTimer();
@@ -29,7 +32,7 @@ module.exports = NodeHelper.create({
       timeLeftMs: this.timer.timeLeftMs(),
       timeLeftFormattedMinutes: this.timer.timeLeftFormatted(),
       stage: this.timer.stage(),
-      timeLimitMs: this.timer.timeLimitMs,
+      timeLimitMs: this.timer.limitMs(),
     };
   },
 
@@ -47,7 +50,7 @@ module.exports = NodeHelper.create({
   },
 
   stopTimer: function() {
-    this.timer.reset();
+    this.timer.stop();
     clearInterval(this.updateInterval);
     this.sendSocketNotification(TIMER_FINISHED_ID, this.payload());
   },
@@ -62,37 +65,29 @@ module.exports = NodeHelper.create({
   },
 
   post: function(req, res) {
-    if (!req.body.timeLimitMs) {
-      res.status(400).send('timeLimitMs is undefined');
-      return;
+    try {
+      this.startTimer(req.body.timeLimitMs);
+      res.status(200).send('Request processed');
+    } catch (e) {
+      res.status(e.code).send(e.message);
     }
-    if (!this.timer.finished()) {
-      res.status(409).send('A timer is already running');
-      return;
-    }
-    this.startTimer(req.body.timeLimitMs);
-    res.status(200).send('Request processed');
   },
 
   put: function(req, res) {
-    if (!req.body.timeLimitMs) {
-      res.status(400).send('timeLimitMs is undefined');
-      return;
+    try {
+      this.timer.update(req.body.timeLimitMs);
+      res.status(200).send('Request processed');
+    } catch (e) {
+      res.status(e.code).send(e.message);
     }
-    if (this.timer.finished()) {
-      res.status(409).send('A timer is not running');
-      return;
-    }
-    this.timer.timeLimitMs = req.body.timeLimitMs;
-    res.status(200).send('Request processed');
   },
 
   delete: function(req, res) {
-    if (this.timer.finished()) {
-      res.status(409).send('A timer is not running');
-      return;
+    try {
+      this.stopTimer();
+      res.status(200).send('Request processed');
+    } catch (e) {
+      res.status(e.code).send(e.message);
     }
-    this.stopTimer();
-    res.status(200).send('Request processed');
   },
 });

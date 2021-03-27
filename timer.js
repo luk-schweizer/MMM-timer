@@ -1,7 +1,16 @@
 class Timer {
   constructor() {
     this._startTime = null;
-    this.timeLimitMs = 0;
+    this._timeLimitMs = 0;
+  }
+
+  /**
+      * Returns the time limit in ms
+      *
+      * @return {number} The time limit in ms
+      */
+  limitMs() {
+    return this._timeLimitMs;
   }
 
   /**
@@ -28,7 +37,7 @@ class Timer {
     */
   timeLeftMs() {
     const elapsedTime = Date.now() - this._startTime;
-    let timeLeft = this.timeLimitMs - elapsedTime;
+    let timeLeft = this._timeLimitMs - elapsedTime;
     if (timeLeft < 0) timeLeft = 0;
     return timeLeft;
   }
@@ -44,19 +53,60 @@ class Timer {
   /**
       * Start the timer with the limit specified
       *
-      * @param {number} limitMs Limit of the timer in ms
+      * @param {number} timeLimitMs Limit of the timer in ms
       */
-  start(limitMs) {
+  start(timeLimitMs) {
+    if (!timeLimitMs) {
+      throw new ErrorWithCode('timeLimitMs is undefined', 400);
+    }
+
+    if (!this.finished()) {
+      throw new ErrorWithCode('The timer is already running', 409);
+    }
+
     this._startTime = Date.now();
-    this.timeLimitMs = limitMs;
+    this._timeLimitMs = timeLimitMs;
   }
 
   /**
-  * Resets the timer
+  * Stops the timer
   */
-  reset() {
+  stop() {
+    if (this.finished()) {
+      throw new ErrorWithCode('The timer is not running', 409);
+    }
     this._startTime = null;
-    this.timeLimitMs = 0;
+    this._timeLimitMs = 0;
+  }
+
+  /**
+  * Updates the time limit of the timer
+  *
+  * @param {number} timeLimitMs New limit of the timer in ms
+  */
+  update(timeLimitMs) {
+    if (!timeLimitMs) {
+      throw new ErrorWithCode('timeLimitMs is undefined', 400);
+    }
+    if (this.finished()) {
+      throw new ErrorWithCode('The timer is not running', 409);
+    }
+    this._timeLimitMs = timeLimitMs;
+  }
+
+  /**
+  * Adds time to the time limit of the timer
+  *
+  * @param {number} timeMs time to add in ms
+  */
+  add(timeMs) {
+    if (!timeMs) {
+      throw new ErrorWithCode('timeMs is undefined', 400);
+    }
+    if (this.finished()) {
+      throw new ErrorWithCode('The timer is not running', 409);
+    }
+    this._timeLimitMs += timeMs;
   }
 
   /**
@@ -69,6 +119,13 @@ class Timer {
     if (timeLeft >= 11000 && timeLeft < 21000) return 'middle';
     if (timeLeft < 11000) return 'end';
     return 'start';
+  }
+}
+
+class ErrorWithCode extends Error {
+  constructor(message, code) {
+    super(message);
+    this.code = code;
   }
 }
 

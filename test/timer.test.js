@@ -13,22 +13,22 @@ test('start should set timeLimitMs to 30 when parameter is 30', () => {
   const timer = new Timer();
   timer.start(30);
 
-  expect(timer.timeLimitMs).toBe(30);
+  expect(timer.limitMs()).toBe(30);
 });
 
 
-test('reset should set timeLimitMs to 0 when timer is running', () => {
+test('stop should set timeLimitMs to 0 when timer is running', () => {
   const timer = new Timer();
   timer.start(30);
-  timer.reset();
+  timer.stop();
 
-  expect(timer.timeLimitMs).toBe(0);
+  expect(timer.limitMs()).toBe(0);
 });
 
 test('finished should be true when timeLeftMs is 0', () => {
   const timer = new Timer();
   timer.start(10);
-  timer.reset();
+  timer.stop();
 
   expect(timer.timeLeftMs()).toBe(0);
   expect(timer.finished()).toBe(true);
@@ -125,4 +125,117 @@ test('start should set timeLeftFormatted to 0:00 when 8 second passed and timeLi
 
   Date.now = jest.fn(() => new Date(2021, 1, 1, 20, 10, 8, 0));
   expect(timer.timeLeftFormatted()).toBe('0:00');
+});
+
+test('start should return error and not start the timer when timeLimitMs is undefined in the request', () => {
+  const timer = new Timer();
+  try {
+    timer.start(null);
+  } catch (e) {
+    expect(e.message).toBe('timeLimitMs is undefined');
+    expect(e.code).toBe(400);
+    expect(timer.limitMs()).toBe(0);
+  }
+});
+
+test('start should return error and not start the timer when a timer is already running', () => {
+  const timer = new Timer();
+  timer.start(2000);
+  try {
+    timer.start(3000);
+  } catch (e) {
+    expect(e.message).toBe('The timer is already running');
+    expect(e.code).toBe(409);
+    expect(timer.limitMs()).toBe(2000);
+  }
+});
+
+
+test('update should return error and not update the timer when timeLimitMs is undefined in the request', () => {
+  const timer = new Timer();
+  try {
+    timer.start(3000);
+    timer.update(null);
+  } catch (e) {
+    expect(e.message).toBe('timeLimitMs is undefined');
+    expect(e.code).toBe(400);
+    expect(timer.limitMs()).toBe(3000);
+  }
+});
+
+
+test('update should return error and not update the timer when a timer is not running', () => {
+  const timer = new Timer();
+  try {
+    timer.update(3000);
+  } catch (e) {
+    expect(e.message).toBe('The timer is not running');
+    expect(e.code).toBe(409);
+    expect(timer.limitMs()).toBe(0);
+  }
+});
+
+
+test('stop should return error and not stop the timer when a timer is not running', () => {
+  const timer = new Timer();
+  try {
+    timer.stop();
+  } catch (e) {
+    expect(e.message).toBe('The timer is not running');
+    expect(e.code).toBe(409);
+    expect(timer.limitMs()).toBe(0);
+  }
+});
+
+
+test('add should return error and not update the timer when timeLimitMs is undefined in the request', () => {
+  const timer = new Timer();
+  try {
+    timer.start(3000);
+    timer.add(null);
+  } catch (e) {
+    expect(e.message).toBe('timeMs is undefined');
+    expect(e.code).toBe(400);
+    expect(timer.limitMs()).toBe(3000);
+  }
+});
+
+
+test('add should return error and not update the timer when a timer is not running', () => {
+  const timer = new Timer();
+  try {
+    timer.add(3000);
+  } catch (e) {
+    expect(e.message).toBe('The timer is not running');
+    expect(e.code).toBe(409);
+    expect(timer.limitMs()).toBe(0);
+  }
+});
+
+
+test('update should set timeLeftMs to 500 when is called with 500 and 0 second passed on a start timer with timeLimit 2s', () => {
+  Date.now = jest.fn(() => new Date(2021, 1, 1, 20, 10, 0, 0));
+  const timer = new Timer();
+  timer.start(2000);
+  timer.update(500);
+
+  expect(timer.timeLeftMs()).toBe(500);
+});
+
+test('add should set timeLeftMs to 2500 when is called with 500 and 0 second passed on a start timer with timeLimit 2s', () => {
+  Date.now = jest.fn(() => new Date(2021, 1, 1, 20, 10, 0, 0));
+  const timer = new Timer();
+  timer.start(2000);
+  timer.add(500);
+
+  expect(timer.timeLeftMs()).toBe(2500);
+});
+
+test('add should set timeLeftMs to 1500 when is called with -500 and 0 second passed on a start timer with timeLimit 2s', () => {
+  Date.now = jest.fn(() => new Date(2021, 1, 1, 20, 10, 0, 0));
+  const timer = new Timer();
+  timer.start(2000);
+  timer.add(-500);
+
+  expect(timer.timeLeftMs()).toBe(1500);
 });

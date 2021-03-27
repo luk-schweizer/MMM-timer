@@ -64,7 +64,7 @@ The following list contains the different HTTP methods that can be used with the
 	<thead>
 		<tr>
 			<th>HTTP Method</th>
-			<th>Body</th>
+			<th>Body (application/json)</th>
 			<th>Response</th>
 			<th>Description</th>
 		</tr>
@@ -75,7 +75,7 @@ The following list contains the different HTTP methods that can be used with the
                 <code><b>POST</b></code>
             </td>
 			<td>
-                <code>{timeLimitMs: 1000}</code>
+                <code>{"timeLimitMs": 1000}</code>
             </td>
             <td>
                 <ul>
@@ -93,7 +93,7 @@ The following list contains the different HTTP methods that can be used with the
                 <code><b>PUT</b></code>
             </td>
 			<td>
-                <code>{timeLimitMs: 2000}</code>
+                <code>{"timeLimitMs": 2000}</code>
             </td>
             <td>
                 <ul>
@@ -157,6 +157,15 @@ List of notifications that the module can handle:
                 Updates the running timer with the specific time limit. No action is made if no timer is running.
             </td>
 		</tr>
+		<tr>
+			<td>ADD_TIMER</td>
+			<td>
+				<code>{timeMs: 2000}</code>
+			</td>
+			<td>
+                Adds time to the running timer. No action is made if no timer is running.
+            </td>
+		</tr>		
 		<tr>
 			<td>STOP_TIMER</td>
 			<td>

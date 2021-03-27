@@ -17,6 +17,7 @@ Module.register('MMM-timer', {
 
   PATH_LENGTH: 283,
   hideTimeout: null,
+  timerRunning: false,
 
   updateView: function(payload) {
     const remainingPathColor = this.COLOR_CODES[payload.stage].color;
@@ -40,31 +41,30 @@ Module.register('MMM-timer', {
     this.sendSocketNotification('START', {});
   },
 
+  resume: function() {
+    if (!this.timerRunning) {
+      this.hide();
+    }
+  },
+
   notificationReceived: function(notification, payload, sender) {
-    switch (notification) {
-      case 'START_TIMER':
-        this.sendSocketNotification('START_TIMER', payload);
-        break;
-      case 'UPDATE_TIMER':
-        this.sendSocketNotification('UPDATE_TIMER', payload);
-        break;
-      case 'STOP_TIMER':
-        this.sendSocketNotification('STOP_TIMER', {});
-        break;
-      case 'MODULE_DOM_CREATED':
-        this.hide();
-        break;
+    if (['START_TIMER', 'UPDATE_TIMER', 'ADD_TIMER', 'STOP_TIMER'].includes(notification)) {
+      this.sendSocketNotification(notification, payload);
+    } else if (notification === 'MODULE_DOM_CREATED') {
+      this.hide();
     }
   },
 
   socketNotificationReceived: function(notification, payload) {
     switch (notification) {
       case 'TIMER_RUNNING':
+        this.timerRunning = true;
         if (this.hideTimeout) clearTimeout(this.hideTimeout);
         if (this.hidden) this.show();
         this.updateView(payload);
         break;
       case 'TIMER_FINISHED':
+        this.timerRunning = false;
         this.updateView(payload);
         document.getElementById('timer-path-remaining')
             .setAttribute('stroke-dasharray', `${this.PATH_LENGTH} ${this.PATH_LENGTH}`);
