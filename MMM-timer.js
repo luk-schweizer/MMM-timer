@@ -92,7 +92,8 @@ Module.register('MMM-timer', {
       <div class="timer-div" style="width: ${this.config.width};height: ${this.config.height};">
           <svg class="timer-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
             <g class="timer-circle">
-              <circle id="timer-path-elapsed" class="timer-path-elapsed" cx="50" cy="50" r="45" stroke-width="${this.config.strokeWidth}">
+              <circle id="timer-path-elapsed" class="timer-path-elapsed"
+              cx="50" cy="50" r="45" stroke-width="${this.config.strokeWidth}">
               </circle>
               <path
                 id="timer-path-remaining"
