@@ -1,6 +1,10 @@
 Module.register('MMM-timer', {
   defaults: {
     timeToHideTimerWhenCompleteMs: 10000,
+    width: '500px',
+    height: '500px',
+    strokeWidth: '7px',
+    fontSize: '30',
   },
 
   COLOR_CODES: {
@@ -85,13 +89,14 @@ Module.register('MMM-timer', {
     wrapper.setAttribute('class', 'timer');
 
     wrapper.innerHTML = `
-      <div class="timer-div">
+      <div class="timer-div" style="width: ${this.config.width};height: ${this.config.height};">
           <svg class="timer-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
             <g class="timer-circle">
-              <circle id="timer-path-elapsed" class="timer-path-elapsed" cx="50" cy="50" r="45">
+              <circle id="timer-path-elapsed" class="timer-path-elapsed" cx="50" cy="50" r="45" stroke-width="${this.config.strokeWidth}">
               </circle>
               <path
                 id="timer-path-remaining"
+                stroke-width="${this.config.strokeWidth}"
                 stroke-dasharray=""
                 class=""
                 d="
@@ -105,7 +110,7 @@ Module.register('MMM-timer', {
             <text class="timer-text"
             x="50%" y="50%"
             id="timer-text"
-            font-size="30"></text>
+            font-size="${this.config.fontSize}"></text>
           </svg>
       </div>
         `;

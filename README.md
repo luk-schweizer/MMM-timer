@@ -42,10 +42,38 @@ The following properties can be configured:
 		<tr>
 			<td><code>timeToHideTimerWhenCompleteMs</code></td>
 			<td>Time in miliseconds that the Timer will remain on screen before being hidden once the Timer finished.<br>
-				<br><b>Possible values:</b> <code>int</code>
+				<br><b>Type:</b> <code>int</code>
 				<br><b>Default value:</b> <code>10000</code>
 			</td>
 		</tr>
+		<tr>
+			<td><code>width</code></td>
+			<td>Width of the Timer.<br>
+				<br><b>Type:</b> <code>string</code>
+				<br><b>Default value:</b> <code>500px</code>
+			</td>
+		</tr>
+		<tr>
+			<td><code>height</code></td>
+			<td>Height of the Timer.<br>
+				<br><b>Type:</b> <code>string</code>
+				<br><b>Default value:</b> <code>500px</code>
+			</td>
+		</tr>
+		<tr>
+			<td><code>strokeWidth</code></td>
+			<td>Stroke width of the Timer circumference.<br>
+				<br><b>Type:</b> <code>string</code>
+				<br><b>Default value:</b> <code>7px</code>
+			</td>
+		</tr>
+		<tr>
+			<td><code>fontSize</code></td>
+			<td>Time in miliseconds that the Timer will remain on screen before being hidden once the Timer finished.<br>
+				<br><b>Type:</b> <code>string</code>
+				<br><b>Default value:</b> <code>30</code>
+			</td>
+		</tr>								
 	</tbody>
 </table>
 

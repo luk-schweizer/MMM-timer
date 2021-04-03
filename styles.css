@@ -9,8 +9,6 @@
 
 .timer-div {
   position: relative;
-  width: 500px;
-  height: 500px;
 }
 
 .timer-svg {
@@ -23,7 +21,6 @@
 }
 
 .timer-path-elapsed {
-  stroke-width: 7px;
   transition: 500ms linear all;
   stroke-opacity: .3;
 }
@@ -41,7 +38,6 @@
 }
 
 .timer-path-remaining {
-  stroke-width: 7px;
   stroke-linecap: round;
   transform: rotate(90deg);
   transform-origin: center;
