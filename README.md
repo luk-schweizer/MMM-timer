@@ -69,7 +69,7 @@ The following properties can be configured:
 		</tr>
 		<tr>
 			<td><code>fontSize</code></td>
-			<td>Time in miliseconds that the Timer will remain on screen before being hidden once the Timer finished.<br>
+			<td>Font Size of the timer numbers.<br>
 				<br><b>Type:</b> <code>string</code>
 				<br><b>Default value:</b> <code>30</code>
 			</td>
